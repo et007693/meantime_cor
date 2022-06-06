@@ -95,6 +95,7 @@ class BertMeanModel(BertBaseModel):
 ##########################################################################################################
     def get_logits(self, d):
         x = d['tokens']
+
         attn_mask = (x > 0).unsqueeze(1).repeat(1, x.size(1), 1).unsqueeze(1)
         ### bert 정의
         e = self.token_embedding(d) + self.positional_embedding(d) + self.side_embedding1(d) + self.side_embedding2(d)+ self.side_embedding3(d) 

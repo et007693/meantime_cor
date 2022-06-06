@@ -13,9 +13,8 @@ def dataloader_factory(args):
     dataset = dataset_factory(args)
     dataloader= DATALOADERS[args.dataloader_code]
     dataloader= dataloader(args, dataset)
-
-    train_mean, val_mean, test_mean = dataloader.get_pytorch_dataloaders()
-    return train_mean, val_mean, test_mean
+    train, val, test = dataloader.get_pytorch_dataloaders()
+    return train, val, test
 
 def get_dataloader(args):
     dataset = dataset_factory(args)

@@ -50,7 +50,6 @@ class BertTrainDataset(data_utils.Dataset):
         self.rng = rng
         self.train_ranges = train_ranges
 
-
         self.index2user_and_offsets = self.populate_indices()
 
         self.output_timestamps = args.dataloader_output_timestamp
@@ -261,6 +260,9 @@ class BertEvalDataset(data_utils.Dataset):
         self.positions = positions
         self.max_len = args.max_len
         self.num_items = len(dataset['smap'])
+        self.side1_count = len(dataset['side1map'])
+        self.side2_count = len(dataset['side2map'])
+        self.side3_count = len(dataset['side3map'])
         self.special_tokens = dataset['special_tokens']
         self.negative_samples = negative_samples
 
@@ -279,11 +281,22 @@ class BertEvalDataset(data_utils.Dataset):
         end = pos + 1
         seq = seq[beg:end]
 
+        seq_1 = self.user2dict[user]['side1s']
+        seq_1 = seq_1[beg:end]
+        
+        seq_2 = self.user2dict[user]['side2s']
+        seq_2 = seq_2[beg:end]
+        
+        seq_3 = self.user2dict[user]['side3s']
+        seq_3 = seq_3[beg:end]
+
+        # negs : negative sample, answer : 정답값(문자), labels : 정답값의 위치
         negs = self.negative_samples[user]
         answer = [seq[-1]]
         candidates = answer + negs
         labels = [1] * len(answer) + [0] * len(negs)
 
+        # max_len 이하인 user를 0 padding
         seq[-1] = self.special_tokens.mask
         padding_len = self.max_len - len(seq)
         seq = [0] * padding_len + seq
