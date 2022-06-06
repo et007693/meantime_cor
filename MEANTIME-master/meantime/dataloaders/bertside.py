@@ -100,16 +100,11 @@ class BertTrainDataset(data_utils.Dataset):
         end = offset  # exclude offset (meant to be)
         seq = seq[beg:end]
 
-        
         seq_1 = self.user2dict[user]['side1s']
         seq_1 = seq_1[beg:end]
         
-
-        
         seq_2 = self.user2dict[user]['side2s']
         seq_2 = seq_2[beg:end]
-        
-
         
         seq_3 = self.user2dict[user]['side3s']
         seq_3 = seq_3[beg:end]
@@ -143,8 +138,6 @@ class BertTrainDataset(data_utils.Dataset):
         tokens = [0] * padding_len + tokens
         labels = [0] * padding_len + labels
 
-
-
         d = {}
         d['tokens'] = torch.LongTensor(tokens)
         d['labels'] = torch.LongTensor(labels)
@@ -177,9 +170,6 @@ class BertTrainDataset(data_utils.Dataset):
         tokens = [0] * padding_len + tokens
         labels = [0] * padding_len + labels
 
-
-
-        
         d['side1'] = torch.LongTensor(tokens)
         d['label1'] = torch.LongTensor(labels)
 
@@ -212,9 +202,6 @@ class BertTrainDataset(data_utils.Dataset):
 
         tokens = [0] * padding_len + tokens
         labels = [0] * padding_len + labels
-
-
-
         
         d['side2'] = torch.LongTensor(tokens)
         d['label2'] = torch.LongTensor(labels)
@@ -247,8 +234,6 @@ class BertTrainDataset(data_utils.Dataset):
 
         tokens = [0] * padding_len + tokens
         labels = [0] * padding_len + labels
-
-
         
         d['side3'] = torch.LongTensor(tokens)
         d['label3'] = torch.LongTensor(labels)

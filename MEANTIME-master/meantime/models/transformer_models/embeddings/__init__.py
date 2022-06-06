@@ -44,7 +44,7 @@ class SideEmbedding2(nn.Module):
         self.emb = nn.Embedding(vocab_size, hidden)
 
     def forward(self, d):
-        X = d['side2'] 
+        x = d['side2'] 
         return self.emb(x)
 
 class SideEmbedding3(nn.Module):

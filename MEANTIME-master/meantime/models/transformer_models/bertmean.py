@@ -116,7 +116,7 @@ class BertMeanModel(BertBaseModel):
                                 relative_kernel_embeddings,
                                 info=info)
 
-        b.weight = b.weight.add(last_hidden.weight)
+        b += last_hidden
 
         return b, info
         

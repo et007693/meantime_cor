@@ -59,5 +59,5 @@ def validate(args, mode='val'):
     model = model_factory(args)
     if args.pretrained_weights is not None:
         model.load(args.pretrained_weights)
-    trainer = trainer_factory_mean(args, model, train_loader, val_loader, test_loader, local_export_root)
+    trainer = trainer_factory(args, model, train_loader, val_loader, test_loader, local_export_root)
     trainer.just_validate(mode)
