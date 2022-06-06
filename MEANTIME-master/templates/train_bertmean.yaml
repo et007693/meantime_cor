@@ -15,8 +15,7 @@ min_sc: 5
 split: leave_one_out
 
 #### 
-dataloader_code_mean: bert 
-dataloader_code_side: bertside 
+dataloader_code: bertside 
 ###
 
 dataloader_random_seed: 0.0

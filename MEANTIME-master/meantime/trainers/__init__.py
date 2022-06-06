@@ -8,12 +8,6 @@ TRAINERS = {c.code():c
             if c.code() is not None}
 
 ### meantime
-def trainer_factory_mean(args, model, train_loader, val_loader, test_loader, export_root):
+def trainer_factory(args, model, train_loader, val_loader, test_loader, export_root):
     trainer = TRAINERS[args.trainer_code]
     return trainer(args, model, train_loader, val_loader, test_loader, export_root)
-    
-### bert_side
-def trainer_factory_side(args, model, train_loader, val_loader, test_loader, export_root):
-    trainer = TRAINERS[args.trainer_code]
-    return trainer(args, model, train_loader, val_loader, test_loader, export_root)
-

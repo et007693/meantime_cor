@@ -8,7 +8,7 @@ MODELS = {c.code():c
           if c.code() is not None}
 
 
-def model_factory_mean(args):
+def model_factory(args):
     model = MODELS[args.model_code]
     return model(args)
 

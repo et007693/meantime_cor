@@ -66,8 +66,7 @@ class TrainingParser:
     def parse_dataloader(self):
         parser = argparse.ArgumentParser(allow_abbrev=False)
         ### 데이터 받는 부분
-        parser.add_argument('--dataloader_code_mean', type=str, choices=DATALOADERS.keys(), help='Selects the dataloader to use for the experiment')
-        parser.add_argument('--dataloader_code_side', type=str, choices=DATALOADERS.keys(), help='Selects the dataloader to use for the experiment')
+        parser.add_argument('--dataloader_code', type=str, choices=DATALOADERS.keys(), help='Selects the dataloader to use for the experiment')
         ###
 
         parser.add_argument('--dataloader_random_seed', type=float, help='Random seed to initialize the random state of the dataloader')

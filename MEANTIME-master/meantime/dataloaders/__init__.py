@@ -9,32 +9,16 @@ DATALOADERS = {c.code():c
                if c.code() is not None}
 
 ### meantime data
-def dataloader_factory_mean(args):
+def dataloader_factory(args):
     dataset = dataset_factory(args)
-    dataloader= DATALOADERS[args.dataloader_code_mean]
+    dataloader= DATALOADERS[args.dataloader_code]
     dataloader= dataloader(args, dataset)
 
     train_mean, val_mean, test_mean = dataloader.get_pytorch_dataloaders()
     return train_mean, val_mean, test_mean
 
-def get_dataloader_mean(args):
+def get_dataloader(args):
     dataset = dataset_factory(args)
-    dataloader = DATALOADERS[args.dataloader_code_mean]
-    dataloader = dataloader(args, dataset)
-    return dataloader
-
-
-### side data
-def dataloader_factory_side(args):
-    dataset = dataset_factory(args)
-    dataloader= DATALOADERS[args.dataloader_code_side]
-    dataloader= dataloader(args, dataset)
-
-    train_side, val_side, test_side = dataloader.get_pytorch_dataloaders()
-    return train_side, val_side, test_side
-
-def get_dataloader_side(args):
-    dataset = dataset_factory(args)
-    dataloader = DATALOADERS[args.dataloader_code_side]
+    dataloader = DATALOADERS[args.dataloader_code]
     dataloader = dataloader(args, dataset)
     return dataloader
