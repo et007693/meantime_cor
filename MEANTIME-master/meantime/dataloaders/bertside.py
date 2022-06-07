@@ -151,7 +151,7 @@ class BertTrainDataset(data_utils.Dataset):
                 if prob < 0.8:
                     tokens.append(self.special_tokens.mask)
                 elif prob < 0.9:
-                    tokens.append(self.rng.randint(1, self.num_items))
+                    tokens.append(self.rng.randint(1, self.side1_count))
                 else:
                     tokens.append(s)
 
@@ -184,7 +184,7 @@ class BertTrainDataset(data_utils.Dataset):
                 if prob < 0.8:
                     tokens.append(self.special_tokens.mask)
                 elif prob < 0.9:
-                    tokens.append(self.rng.randint(1, self.num_items))
+                    tokens.append(self.rng.randint(1, self.side2_count))
                 else:
                     tokens.append(s)
 
@@ -216,7 +216,7 @@ class BertTrainDataset(data_utils.Dataset):
                 if prob < 0.8:
                     tokens.append(self.special_tokens.mask)
                 elif prob < 0.9:
-                    tokens.append(self.rng.randint(1, self.num_items))
+                    tokens.append(self.rng.randint(1, self.side3_count))
                 else:
                     tokens.append(s)
 
@@ -274,31 +274,48 @@ class BertEvalDataset(data_utils.Dataset):
         return len(self.positions)
 
     def __getitem__(self, index):
+        # positions = self.validation_targets if mode=='val' else self.test_targets
         user, pos = self.positions[index]
+        # 유저 구매 기록
         seq = self.user2dict[user]['items']
 
+        # max_len(=10)보다 길이가 짧으면 0, 길면 pos - max_len
         beg = max(0, pos + 1 - self.max_len)
         end = pos + 1
+        # 구매 길이(for padding)
         seq = seq[beg:end]
 
         seq_1 = self.user2dict[user]['side1s']
         seq_1 = seq_1[beg:end]
-        
+        seq_1 = [0] * padding_len + seq_1
+        d['side1'] = torch.LongTensor(seq_1)
+
         seq_2 = self.user2dict[user]['side2s']
         seq_2 = seq_2[beg:end]
+        seq_2 = [0] * padding_len + seq_2
+        d['side2'] = torch.LongTensor(seq_2)
+        
         
         seq_3 = self.user2dict[user]['side3s']
         seq_3 = seq_3[beg:end]
+        seq_3 = [0] * padding_len + seq_3
+        d['side3'] = torch.LongTensor(seq_3)
+
 
         # negs : negative sample, answer : 정답값(문자), labels : 정답값의 위치
         negs = self.negative_samples[user]
+        # seq의 마지막은 정답값
         answer = [seq[-1]]
+        # candidiate = 정답 + negative sample값
         candidates = answer + negs
+        # 정답값의 위치 labeling
         labels = [1] * len(answer) + [0] * len(negs)
 
-        # max_len 이하인 user를 0 padding
+        # 정답값을 masking
         seq[-1] = self.special_tokens.mask
+        # padding 길이
         padding_len = self.max_len - len(seq)
+        # max_len보다 짧은 seq에 zero padding
         seq = [0] * padding_len + seq
 
         tokens = torch.LongTensor(seq)
@@ -320,4 +337,6 @@ class BertEvalDataset(data_utils.Dataset):
 
         if self.output_user:
             d['users'] = torch.LongTensor([user])
+
+        
         return d

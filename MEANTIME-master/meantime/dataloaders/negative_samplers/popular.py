@@ -28,12 +28,6 @@ class PopularNegativeSampler(AbstractNegativeSampler):
             p[zeros] = 0.0
             p = p / p.sum()
 
-            # samples = []
-            # for _ in range(self.sample_size):
-            #     item = np.random.choice(items, p=prob)
-            #     while item in seen or item in samples:
-            #         item = np.random.choice(items, p=prob)
-            #     samples.append(item)
             samples = np.random.choice(items, self.sample_size, replace=False, p=p)
 
             negative_samples[user] = samples.tolist()

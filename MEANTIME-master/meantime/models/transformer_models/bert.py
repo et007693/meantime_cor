@@ -37,7 +37,6 @@ class BertModel(BertBaseModel):
 
         info = {} if self.output_info else None
         b = self.body(e, attn_mask, info)  # B x T x H
-        print(b)
         return b, info
 
     def get_scores(self, d, logits):

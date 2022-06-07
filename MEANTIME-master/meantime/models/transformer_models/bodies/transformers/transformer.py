@@ -3,7 +3,6 @@ from meantime.models.transformer_models.utils import PositionwiseFeedForward, Su
 import torch
 from torch import nn as nn
 from torch.nn import functional as F
-import pickle
 
 class TransformerBlock(nn.Module):
     def __init__(self, args):

@@ -1,6 +1,5 @@
 import torch.nn as nn
 from .gelu import GELU
-import pickle
 
 class PositionwiseFeedForward(nn.Module):
     def __init__(self, d_model, d_ff, dropout=0.1, act='gelu', middle_drop=True):

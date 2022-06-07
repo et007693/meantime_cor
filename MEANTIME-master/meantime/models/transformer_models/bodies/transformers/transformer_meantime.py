@@ -3,7 +3,6 @@ from meantime.models.transformer_models.utils import PositionwiseFeedForward, Su
 import torch
 from torch import nn as nn
 from torch.nn import functional as F
-import pickle
 
 class TransformerMeantimeBlock(nn.Module):
     def __init__(self, args, La, Lr):
@@ -26,8 +25,6 @@ class TransformerMeantimeBlock(nn.Module):
         x = self.output_sublayer(x, self.feed_forward)
         #############################
         x = self.dropout(x)
-        with open('meantimeoutput.pickle','wb') as fw:
-          pickle.dump(x, fw)
         # return self.dropout(x)
         return x
 
